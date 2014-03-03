@@ -5,10 +5,23 @@ comments: false
 ---
 
 <div id="home">
-  <h1>Blog Posts</h1>
+  <!--<h1>Posts</h1>
   <ul class="posts">
     {% for post in site.posts %}
       <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
     {% endfor %}
+  </ul>-->
+
+  <h1>Web Projects</h1>
+  <ul class='posts'>
+  	<li><span><a href="http://github.com/theoperatore/super-party-horse">source</a></span> &raquo; <a href="http://anpetersen.me/super-party-horse">super party horse</a></li>
+  	<li><span><a href='http://github.com/theoperatore/atomize'>source</a></span> &raquo; <a href='http://anpetersen.me/atomize'>atomize</a></li>
+  	<li><span><a href="http://github.com/theoperatore/nicker-converter">source</a></span> &raquo; <a href="http://anpetersen.me/nicker-converter">nicker converter</a></li>
+  </ul>
+
+  <h1>Dev Projects</h1>
+  <ul class='posts'>
+  	<li><span><a href="http://github.com/theoperatore/word-associate">Word Associate</a></span></li>
+  	<li><span><a href="http://github.com/theoperatore/extstat">Extstat</span></li>
   </ul>
 </div>
