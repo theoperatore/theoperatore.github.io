@@ -1,14 +1,10 @@
 ---
 layout: default
-title: Al Petersen | A Portal to Web Creations
+title: Alex Petersen | A Portal to Web Creations
 comments: false
 ---
-<!--
-<div class='clock'>
-<canvas id='demo_polar' height='450' width='700'></canvas>
-</div>
--->
-<div id="home">
+
+<div class='tri-container'>
   <!--<h1>Posts</h1>
   <ul class="posts">
     {% for post in site.posts %}
@@ -16,18 +12,20 @@ comments: false
     {% endfor %}
   </ul>-->
 
-  <h1>Web Projects</h1>
-  <ul class='posts'>
-  	<li><span><a href="http://github.com/theoperatore/super-party-horse">source</a></span> &raquo; <a href="http://anpetersen.me/super-party-horse">super party horse</a></li>
-  	<li><span><a href='http://github.com/theoperatore/atomize'>source</a></span> &raquo; <a href='http://anpetersen.me/atomize/demo.html'>atomize</a></li>
-  	<li><span><a href="http://github.com/theoperatore/nicker-converter">source</a></span> &raquo; <a href="http://anpetersen.me/nicker-converter">nicker converter</a></li>
-  </ul>
+  <h1 class='title-name'>{{ site.name }}</h1>
+  <span class='sword-img'></span>
+  <span class='tri-navigation'>
+    <span class='left-menu-entry'>Blog</span>
+    <span class='center-menu-entry'>Contact</span>
+    <span class='right-menu-entry'>Projects</span>
+  </span>
 
-  <h1>Dev Projects</h1>
-  <ul class='posts'>
-  	<li><span><a href="http://github.com/theoperatore/word-associate">Word Associate</a></span></li>
-  	<li><span><a href="http://github.com/theoperatore/extstat">Extstat</a></span></li>
+  <!--<ul class='menu-list'>
+    <li class='left-menu-entry'>Blog</li>
+    <li class='center-menu-entry'>Contact</li>
+    <li class='right-menu-entry'>Projects</li>
   </ul>
+  -->
+
+
 </div>
-
-<!--<script type='text/javascript' src='./polar.js'></script>-->
