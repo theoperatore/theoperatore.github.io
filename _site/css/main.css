@@ -21,9 +21,8 @@
 html, body { height: 100%; }
 
 body {
-  background-color: #FFF;
-  font-family: "Helvetica Neue", "Helvetica", "Open Sans", Arial, sans-serif;
-  font-size: small;
+  background-color: #333;
+  font-family: "Helvetica Neue", "Open Sans", Arial, sans-serif;
   text-align: center;
 }
 
@@ -36,6 +35,7 @@ p { margin: 1em 0; }
 a         { color: #F07057; text-decoration: none; }
 a:hover   { color: #000; }
 a:visited { color: #F07057; }
+span > a:hover { color: #009dff; }
 
 /*****************************************************************************/
 /*
@@ -64,24 +64,36 @@ a:visited { color: #F07057; }
 /*****************************************************************************/
 .tri-container {
   padding: 12px 24px;
+  max-width: 980px;
+  margin:0 auto;
 }
 .title-name {
   font-size: 3em;
+  color: #fff;
 }
 .sword-img {
   width : 300px;
   height: 300px;
   margin: 0 auto;
-  display:block;
+  display:inline-block;
   border: 1px solid #ddd;
   border-radius: 50%;
-  background-image: url('../assets/sword.jpg');
+  /*background-image: url('../assets/sword.jpg');*/
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  transition: all 1200ms;
 }
+
+.sword-img:hover {
+  transform: scale(1.25);
+  /*width: 325px;
+  height: 325px;*/
+}
+
 .tri-navigation {
-  max-width: 400px;
+  width: 400px;
   height: 150px;
   margin: 0 auto;
   margin-top: -17px;
@@ -89,28 +101,6 @@ a:visited { color: #F07057; }
   background-image: url('../assets/tri-navigation.svg');
   background-repeat:no-repeat;
 }
-/*
-.menu-list li {
-  display:inline-block;
-  text-align: center;
-
-  font-weight: 200;
-  font-size: 2em;
-  width: 4em;
-}
-
-.left-menu-entry {
-  margin-top: -100px;
-  margin-right: 100px;
-}
-.center-menu-entry {
-  margin-top: -25px;
-}
-.right-menu-entry {
-  margin-top: -100px;
-  margin-left: 100px;
-}
-*/
 
 .left-menu-entry, .center-menu-entry, .right-menu-entry {
   display:inline-block;
@@ -118,7 +108,6 @@ a:visited { color: #F07057; }
   font-size: 2em;
   font-weight: 200;
   width: 4em;
-
 }
 
 .left-menu-entry {
@@ -134,6 +123,12 @@ a:visited { color: #F07057; }
   top: 50px;
 }
 
+.footer {
+  padding-top: 5em;
+  font-size: small;
+  font-weight: 200;
+  color: #fff;
+}
 
 /*****************************************************************************/
 /*
