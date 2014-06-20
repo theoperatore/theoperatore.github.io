@@ -68,12 +68,17 @@ span > a:hover { color: #009dff; }
   margin:0 auto;
 }
 .title-name {
-  font-size: 3em;
+  font-size: 2em;
   color: #fff;
+  text-align: center;
 }
+.var { color: #b294bb; }
+.string { color: #d9e37a; }
+.operator { color: #F07057; }
+
 .sword-img {
-  width : 300px;
-  height: 300px;
+  width : 250px;
+  height: 250px;
   margin: 0 auto;
   display:inline-block;
   border: 1px solid #ddd;
@@ -87,9 +92,21 @@ span > a:hover { color: #009dff; }
 }
 
 .sword-img:hover {
-  transform: scale(1.25);
-  /*width: 325px;
-  height: 325px;*/
+  /*transform: scale(1.15);*/
+  animation: pulse 500ms;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.15);
+  }
 }
 
 .tri-navigation {
