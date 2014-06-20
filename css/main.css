@@ -114,7 +114,7 @@ span > a:hover { color: #009dff; }
 }
 
 .tri-navigation {
-  width: 400px;
+  max-width: 400px;
   height: 150px;
   margin: 0 auto;
   margin-top: -17px;
