@@ -62,9 +62,13 @@ span > a:hover { color: #009dff; }
 /* Site
 /*
 /*****************************************************************************/
+.site {
+  width: 980px;
+  margin:0 auto;
+}
 .tri-container {
   padding: 12px 24px;
-  max-width: 980px;
+  /*width: 980px;*/
   margin:0 auto;
 }
 .title-name {
