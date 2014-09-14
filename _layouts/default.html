@@ -1,33 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{{ page.title }}</title>
-        <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    {% include head.html %}
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,400italic' rel='stylesheet' type='text/css'>
-
-    </head>
     <body>
 
-        <div class="site">
-          <div class="header">
-            <!--<h1 class="title"><a href="/">{{ site.name }}</a></h1>-->
-          </div>
+      <div class="site">
+        {% include header.html %}
+        {{ content }}
+        {% include footer.html %}
+      </div>
 
-          {{ content }}
 
-          <div class="footer">
-            <span class='bottom'>&copy;2014 -- Made using <a target="_blank" href='http://jekyllrb.com/'>Jekyll</a> hosted on <a href='http://pages.github.com/'>GitHub</a></span>
-          </div>
+      <script type="text/javascript">
 
-        </div>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
 
+          document.getElementById('nav').classList.toggle('show');
+
+        }, false);
+
+      </script>      
     </body>
 </html>

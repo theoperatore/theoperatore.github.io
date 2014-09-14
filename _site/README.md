@@ -1,7 +1,7 @@
 theoperatore.github.io
 ======================
 
-A portal to EVERYTHING (...I want to show/..)
+A portal to EVERYTHING (...I want to show...)
 
 
 Find the actual page [here](http://anpetersen.me). 

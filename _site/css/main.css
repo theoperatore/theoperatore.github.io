@@ -21,32 +21,30 @@
 html, body { height: 100%; }
 
 body {
-  background-color: #333;
-  font-family: "Helvetica Neue", "Open Sans", Arial, sans-serif;
-  text-align: center;
+  font-family: "Open Sans", "Helvetica Neue", helvetica, arial, sans-serif;
 }
 
-h1 {
-  margin-bottom: 1em;
-  font-weight: 100;
-}
-p { margin: 1em 0; }
+h1 { color: #333; font-weight: 300; }
 
-a         { color: #F07057; text-decoration: none; }
-a:hover   { color: #000; }
-a:visited { color: #F07057; }
-span > a:hover { color: #009dff; }
+a, a:link, a:visited { color: #009dff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin: 1.55em 0; line-height: 1.55em; }
+ul { margin: 1em auto; }
 
 /*****************************************************************************/
 /*
 /* Home
 /*
 /*****************************************************************************/
+.posts-container {
+  max-width: 980px;
+  margin:2em auto;
+  padding: 10px;
+}
 .posts {
   list-style-type: none;
-  margin-bottom: 2em;
+  padding: 10px;
 }
-
 .posts li {
   line-height: 1.75em;
 }
@@ -57,98 +55,61 @@ span > a:hover { color: #009dff; }
   font-size: 80%;
 }
 
+header { border-bottom: 1px solid #ddd; }
+.header-content { max-width: 980px; margin:0 auto; padding:10px; }
+.header-content h1 { float:left; font-weight: 700; }
+.header-content > h1 > a { color: #333; }
+.header-content > h1 > a:hover { text-decoration: none; }
+.header-content ul { float:right; padding-left:0; margin-top: 10px; }
+.header-content ul li { display:inline-block; margin-left: 20px;}
+.header-content ul li:first-of-type {margin-left:0; }
+.header-content:after {
+  content: "";
+  display:table;
+  clear:both;
+}
+
+.sword-banner {
+  display:block;
+  max-width: 100%;
+  height: 200px;
+  background-image: url("../assets/sword.jpg");
+  background-repeat: no-repeat;
+  background-position: center -400px;
+  border-bottom: 1px solid #ddd;
+}
+
 /*****************************************************************************/
 /*
 /* Site
 /*
 /*****************************************************************************/
 .site {
-  width: 980px;
-  margin:0 auto;
+  /*width: 980px;
+  margin:0 auto;*/
 }
-.tri-container {
-  padding: 12px 24px;
-  /*width: 980px;*/
-  margin:0 auto;
-}
-.title-name {
-  font-size: 2em;
-  color: #fff;
+footer {
+  font-size: small;
   text-align: center;
 }
-.var { color: #b294bb; }
-.string { color: #d9e37a; }
-.operator { color: #F07057; }
-
-.sword-img {
-  width : 250px;
-  height: 250px;
-  margin: 0 auto;
-  display:inline-block;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  /*background-image: url('../assets/sword.jpg');*/
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  transition: all 1200ms;
+footer img {
+  width: 20px;
+  height:20px;
 }
+footer ul { padding-left: 0; margin-top: 1em; }
+footer ul li { display:inline-block; margin-left: 10px; }
+footer ul li:first-of-type { margin-left: 0; }
 
-.sword-img:hover {
-  /*transform: scale(1.15);*/
-  animation: pulse 500ms;
-  animation-direction: alternate;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.15);
-  }
-}
-
-.tri-navigation {
-  max-width: 400px;
-  height: 150px;
-  margin: 0 auto;
-  margin-top: -17px;
-  display:block;
-  background-image: url('../assets/tri-navigation.svg');
-  background-repeat:no-repeat;
-}
-
-.left-menu-entry, .center-menu-entry, .right-menu-entry {
-  display:inline-block;
-  position: relative;
-  font-size: 2em;
-  font-weight: 200;
-  width: 4em;
-}
-
-.left-menu-entry {
-  left: -125px;
-  top: 50px;
-
-}
-.center-menu-entry {
-  top: 125px;
-}
-.right-menu-entry {
-  right: -145px;
-  top: 50px;
-}
-
-.footer {
-  padding-top: 5em;
-  font-size: small;
-  font-weight: 200;
-  color: #fff;
+/*****************************************************************************/
+/*
+/* Page
+/*
+/*****************************************************************************/
+.page {
+  max-width: 540px;
+  margin:0 auto; 
+  padding:10px;
+  margin-top: 3em;
 }
 
 /*****************************************************************************/
@@ -156,6 +117,11 @@ span > a:hover { color: #009dff; }
 /* Posts
 /*
 /*****************************************************************************/
+.post-container {
+  max-width: 540px; 
+  margin:0 auto; 
+}
+
 
 /* standard */
 .post pre {
@@ -187,4 +153,15 @@ span > a:hover { color: #009dff; }
 
 .post pre.terminal code {
   background-color: #333;
+}
+
+.show { display: block !important; }
+#menu-toggle { display:none; width: 32px; height: 32px;}
+#menu-toggle:after {content: ""; display:table; clear:both;}
+@media screen and (max-width: 486px) {
+  .sword-banner { height: 100px; }
+  header h1 { font-size: 1.5em; }
+  #nav { display: none; clear:both; }
+  #nav li { display: block; margin-left:0;}
+  #menu-toggle { display: block; float:right; }
 }

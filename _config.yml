@@ -1,5 +1,3 @@
 name: Alex.Petersen
-first: Alex
-last: Petersen
 markdown: redcarpet
-pygments: true
+hightlighter: true
