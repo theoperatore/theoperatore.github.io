@@ -6,9 +6,7 @@ comments: true
 
 I've played Destiny a lot. As of writing I must've played about 30+ hours (~8 hours a day for the first week?). With that many hours put into the game I've run into some aspects that are *pretty awesome* and others that are **really terrible**.
 
-
-
-I can't say anything different about the feel of the game that [Brendan Keogh](http://brkeogh.com/2014/09/14/notes-on-destiny/) says differently. I agree 100%. What I want to focus on is the progression of the game; starting a character and getting into the endgame content.
+I can't say anything about the feel of the game that [Brendan Keogh](http://brkeogh.com/2014/09/14/notes-on-destiny/) hasn't said already. I agree 100%. What I want to focus on is the progression of the game; starting a character and getting into the endgame content.
  
 ### Progression
 
