@@ -37,7 +37,7 @@ ul { margin: 1em auto; }
 /*
 /*****************************************************************************/
 .posts-container {
-  max-width: 980px;
+  max-width: 540px;
   margin:2em auto;
   padding: 10px;
 }
@@ -50,9 +50,17 @@ ul { margin: 1em auto; }
 }
 
 .posts span {
-  color: #aaa;
+  color: #777;
   font-family: Monaco, "Courier New", monospace;
   font-size: 80%;
+}
+
+img { width: 100%; }
+.img-description {
+  display:block;
+  font-size:small;
+  text-align: center;
+  color: #777;
 }
 
 header { border-bottom: 1px solid #ddd; }
@@ -119,7 +127,8 @@ footer ul li:first-of-type { margin-left: 0; }
 /*****************************************************************************/
 .post-container {
   max-width: 540px; 
-  margin:0 auto; 
+  margin:2em auto; 
+  padding:10px 12px; 
 }
 
 
