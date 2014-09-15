@@ -89,7 +89,7 @@ Destiny is both wonderful and horrible. It excites me when I am actaully able to
 
 However when the endgame content removes the thrill of defeating a boss and getting a better piece of equipment specifically from that boss and instead opts for randomizing equipment rewards, Destiny becomes a time management game instead of a team based skill or strategy game; how can I maximize the sheer number of strike missions I can play in a given amount of time? 
 
-I know I'll keep playing the game dispite the hangups I have on endgame content because Destiny is an ever evolving game with new content being released monthly (plus all of my friends are playing the game too). Hopefully raids will be the strategic team-based experience Destiny needs to stay exciting and for me to stay interested.
+I know I'll keep playing the game despite the hangups I have on endgame content because Destiny is an ever evolving game with new content being released monthly (plus all of my friends are playing the game too). Hopefully raids will be the strategic team-based experience Destiny needs to stay exciting and for me to stay interested.
 
 ![There's always hope]({{site.baseurl}}/assets/destiny/guardian_traveler.jpg)
 <span class="img-description">There's always hope</span>
