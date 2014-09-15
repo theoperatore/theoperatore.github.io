@@ -8,7 +8,7 @@ I've played Destiny a lot. As of writing I must've played about 30+ hours (~8 ho
 
 
 
-I can't say anything about the feel of the game that [Brendan Keogh](http://brkeogh.com/2014/09/14/notes-on-destiny/) says differently. I agree 100%. What I want to focus on is the progression of the game; starting a character and getting into the endgame content.
+I can't say anything different about the feel of the game that [Brendan Keogh](http://brkeogh.com/2014/09/14/notes-on-destiny/) says differently. I agree 100%. What I want to focus on is the progression of the game; starting a character and getting into the endgame content.
  
 ### Progression
 
@@ -17,7 +17,7 @@ I can't say anything about the feel of the game that [Brendan Keogh](http://brke
 
 You start at level 1 and have missions that revolve around a story. As you complete these missions you usually gain enough experience to get to the next level, sometimes you gain two levels. With each level up comes a new ability for your class. If you have any rare or uncommon items they might level up too. A player is almost always getting something new with an immediate reward.
 
-However, getting to the maximum experience level is fast; level one to twenty in about two days. Once you reach the maximum level you now have the ability to buy or find items with an extra 'light' stat on them that increases your 'light level' making it possibly to raise your character's level above twenty. Equip enough 'light' and BAM! now you are level twenty-one, etc.
+However, getting to the maximum experience level is fast; level one to twenty in about two days. Once you reach the maximum level you now have the ability to buy or find items with an extra 'light' stat on them that increases your 'light level' making it possible to raise your character's level above twenty. Equip enough 'light' and BAM! now you are level twenty-one, etc.
 
 It is here that the game switches from mission based gameplay to strike based gameplay. Since the player can only get the rewards for finishing a mission once, there is no incentive to replay any of them.
 
