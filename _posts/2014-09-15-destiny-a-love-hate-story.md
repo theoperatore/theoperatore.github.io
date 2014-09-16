@@ -28,14 +28,16 @@ Cool, I now can replay missions with really awesome boss fights and get better e
 ![Strike Playlists]({{site.baseurl}}/assets/destiny/strike_playlist.jpg)
 <span class="img-description">4 strike playlists ranging from level 18 to 24</span>
 
-The worst part is that the strike playlists are **random**. The game decides which strike mission you play. Good luck not getting the same strike multiple times in a row (About 90% of the total strikes I've played are the same mission, The Nexus)! You have a bounty (side mission to earn a some extra experience and reputation) which requires you to defeat a certain boss on heroic difficulty? HAH! Good luck defeating the random chance monster and getting the strike mission you need to complete the bounty...
+The worst part is that the strike playlists are **random**. The game decides which strike mission you play.
+
+Good luck not getting the same strike multiple times in a row (About 90% of the total strikes I've played are the same mission, The Nexus)! You have a bounty (side mission to earn a some extra experience and reputation) which requires you to defeat a certain boss on heroic difficulty? HAH! Good luck defeating the random chance monster and getting the strike mission you need to complete the bounty...
 
 Why can't a player choose the strike mission to play *and* the difficulty? Barring any matchmaking or server requirements, it seems to me that the only gameplay reason to prevent this functionality is to prevent players from playing the 'easiest' strike again and again, but if the random playlist already does that then what's the harm in allowing the player to set the difficulty manually?
 
 ![Why do I always play at The Nexus?]({{site.baseurl}}/assets/destiny/nexus_boss.jpg)
 <span class="img-description">I've played you too many times...</span>
 
-Now we get into the reason why a player chooses to play the random strike missions at all: the equipment upgrades.
+Anyway, now we get into the reason why a player chooses to play the random strike missions at all: the equipment upgrades.
 
 ### Enter the grind
 
