@@ -37,7 +37,7 @@ ul { margin: 1em auto; }
 /*
 /*****************************************************************************/
 .posts-container {
-  max-width: 540px;
+  max-width: 740px;
   margin:2em auto;
   padding: 10px;
 }
@@ -114,7 +114,7 @@ footer ul li:first-of-type { margin-left: 0; }
 /*
 /*****************************************************************************/
 .page {
-  max-width: 540px;
+  max-width: 740px;
   margin:0 auto; 
   padding:10px;
   margin-top: 3em;
@@ -126,7 +126,7 @@ footer ul li:first-of-type { margin-left: 0; }
 /*
 /*****************************************************************************/
 .post-container {
-  max-width: 540px; 
+  max-width: 740px; 
   margin:2em auto; 
   padding:10px 12px; 
 }

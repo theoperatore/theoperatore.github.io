@@ -1,0 +1,21 @@
+# Potential Posts
+
+- Does anyone use <canvas> for website inteactivity?
+  - Using <canvas> and js mouse events to handle websites vs traditional css transitions, animations, etc.
+  - canvas/css using hardware acceleration. 
+  - webGL/Three.js
+  - http://davidwalsh.name/css-js-animation
+- JS closures
+  - my first real use for them.
+  - triangulate app
+- React.js
+  - basic intro
+  - write down what I know
+  - state vs props
+- Using Firebase for real-time data aquisition/computation
+  - trivia polling app - getting statistics back
+  - triangulate app (storing info to firebase)
+  - http://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server/18197341?noredirect=1#answer-3665147
+  - URI
+- HD-Canvas
+  - walk through module
