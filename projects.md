@@ -6,7 +6,7 @@ title: Projects
 
 # Hosted Web Projects
 
-Here follows a list of my web apps, their sources, and a short description! Horray!
+Here follows a list of my web apps, their sources, and a short description! Hooray!
 
 ## Triangulate
 
