@@ -37,7 +37,7 @@ ul { margin: 1em auto; }
 /*
 /*****************************************************************************/
 .posts-container {
-  max-width: 740px;
+  max-width: 640px;
   margin:2em auto;
   padding: 10px;
 }
@@ -114,7 +114,7 @@ footer ul li:first-of-type { margin-left: 0; }
 /*
 /*****************************************************************************/
 .page {
-  max-width: 740px;
+  max-width: 640px;
   margin:0 auto; 
   padding:10px;
   margin-top: 3em;
@@ -126,7 +126,7 @@ footer ul li:first-of-type { margin-left: 0; }
 /*
 /*****************************************************************************/
 .post-container {
-  max-width: 740px; 
+  max-width: 640px; 
   margin:2em auto; 
   padding:10px 12px; 
 }
@@ -135,8 +135,9 @@ footer ul li:first-of-type { margin-left: 0; }
 /* standard */
 .post pre {
   border: 1px solid #ddd;
-  background-color: #eef;
-  padding: 0 .4em;
+  background-color: #f7f7f7;
+  padding: .4em .4em;
+  border-radius: 3pt;
 }
 
 .post ul, .post ol {
@@ -145,13 +146,16 @@ footer ul li:first-of-type { margin-left: 0; }
 
 .post code {
   border: 1px solid #ddd;
-  background-color: #eef;
+  background-color: #f7f7f7;
   padding: 0 .2em;
 }
 
 .post pre code {
   border: none;
 }
+
+.post > .highlight .lineno { color: #ccc; display:inline-block; padding: 0 5px; border-right:1px solid #ccc; }
+.post > .highlight pre code { display: block; white-space: pre; overflow-x: auto; word-wrap: normal; }
 
 /* terminal */
 .post pre.terminal {

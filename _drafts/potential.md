@@ -1,7 +1,10 @@
-# Potential Posts
+---
+title: Potential Posts
+layout: post
+---
 
-- Does anyone use <canvas> for website inteactivity?
-  - Using <canvas> and js mouse events to handle websites vs traditional css transitions, animations, etc.
+- Does anyone use `<canvas>` for website inteactivity?
+  - Using `<canvas>` and js mouse events to handle websites vs traditional css transitions, animations, etc.
   - canvas/css using hardware acceleration. 
   - webGL/Three.js
   - http://davidwalsh.name/css-js-animation
@@ -19,3 +22,13 @@
   - URI
 - HD-Canvas
   - walk through module
+- Object Equality
+  - how does obj1 === obj2 actually work.
+  - is it enough to say instanceof obj1 === instanceof obj2?
+- Spring forces
+  - spring forces on DOM elements
+  - springify
+- Support.js
+  - simple node.js module to tell you if a function exists.
+  - if (supported("requestAnimationFrame")) { RAF something }
+  - supportedElement('input').has('placeholder');
