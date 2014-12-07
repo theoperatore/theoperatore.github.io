@@ -8,17 +8,23 @@ title: Projects
 
 Here follows a list of my web apps, their sources, and a short description! Hooray!
 
+## Triangulate
+
+Made to help my sister track rehabilitated Red Hawks. Hooks into the Google Maps API to allow for easy triangulation and data computations.
+
+[source](https://github.com/theoperatore/triangulate) : [app](http://anpetersen.me/triangulate)
+
 ## Chimera
 
 A D&amp;D Digital Character Sheet. Currently only supports 4th edition, hopefully soon to have a 5th edition sheet as well. Uses React.js and soon to use Firebase with real-time stat tracking, snapshots, and other features to help make your life easier so you can focus more on the campaign. 
 
 [source](https://github.com/theoperatore/chimera) : [app](http://anpetersen.me/chimera)
 
-## Triangulate
+## Dawn
 
-Made to help my sister track rehabilitated Red Hawks. Hooks into the Google Maps API to allow for easy triangulation and data computations.
+A text-adventure engine build in Java! Features a command parser with semi-natural language parsing.
 
-[source](https://github.com/theoperatore/triangulate) : [app](http://anpetersen.me/triangulate)
+[source](https://github.com/theoperatore/dawn) : [documentation](http://anpetersen.me/dawn)
 
 ## Bookprint
 
