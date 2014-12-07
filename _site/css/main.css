@@ -99,6 +99,7 @@ header { border-bottom: 1px solid #ddd; }
 footer {
   font-size: small;
   text-align: center;
+  padding-bottom: 1em;
 }
 footer img {
   width: 20px;
@@ -107,6 +108,56 @@ footer img {
 footer ul { padding-left: 0; margin-top: 1em; }
 footer ul li { display:inline-block; margin-left: 10px; }
 footer ul li:first-of-type { margin-left: 0; }
+footer a { margin-right: 5px; }
+
+.me {
+  font-size: 16px;
+  padding:10px 12px;
+  text-align: left;
+  max-width: 640px;
+  margin: 2em auto;
+}
+.me:after {
+  content: "";
+  display: table;
+  clear:both;
+}
+.highlight-img {
+  float:left;
+  padding: 10px 24px 10px 0px;
+}
+ 
+.me-description {
+  padding:10px 12px;
+}
+.me-img {
+  max-width: 150px;
+  overflow: hidden;
+}
+.me-img > img {
+  margin-top: 2em;
+  width: 150px;
+  height: auto;
+  border-radius: 2pt;
+  display: block;
+}
+
+.easter-egg {
+  position:relative;
+  width: auto !important;
+  height: 150px !important;
+  top: -182px;
+  right: -145px;
+  -webkit-transition: all 200ms;
+  -moz-transition: all 200ms;
+  -ms-transition: all 200ms;
+  -o-transition: all 200ms;
+  transition: all 200ms;
+}
+
+.easter-egg:hover {
+  right: -65px;
+}
 
 /*****************************************************************************/
 /*
@@ -177,4 +228,5 @@ footer ul li:first-of-type { margin-left: 0; }
   #nav { display: none; clear:both; }
   #nav li { display: block; margin-left:0;}
   #menu-toggle { display: block; float:right; }
+  .highlight-img { float: none; }
 }

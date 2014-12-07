@@ -1,0 +1,66 @@
+==================================================================
+https://keybase.io/theoperatore
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://anpetersen.me
+  * I am theoperatore (https://keybase.io/theoperatore) on keybase.
+  * I have a public key with fingerprint DFF1 D15A 7DFE E471 E0DA  5D34 A681 841E 8617 64C8
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "dff1d15a7dfee471e0da5d34a681841e861764c8",
+            "host": "keybase.io",
+            "key_id": "a681841e861764c8",
+            "uid": "f25f8055a3aad21ef3b6a1eb4c192600",
+            "username": "theoperatore"
+        },
+        "service": {
+            "hostname": "anpetersen.me",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1414302340,
+    "expire_in": 157680000,
+    "prev": "affe8faf198849055b5a4999e8157fb453d560f1f55ddd7036aa0bcca5104d5a",
+    "seqno": 2,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v1.1.3
+Comment: https://keybase.io/crypto
+
+yMHuAnicO8LLzMDFmCBVnN4iUtDBePrAt1KGEJ+ulmqlpPyUSiWraqXsVDCVlpmX
+nlpUUJSZV6JkpZSSlmaYYmiaaJ6SlppqYm6YapCSaJpibJJoZmFoYWKYamFmaG5m
+kmyhpKOUkV8M0gE0JimxOFUvMx8oBuTEZ6YARbGoLwVLpBmZplkYmJomGicmphgZ
+pqYZJ5klGqYmmSQbWhqZGRiAFBanFuUl5qYCVZdkpOYXpBYlluQXpSrV6igBZcoy
+k1NB7gZZD1WVmFeQWpJaVJyapwfk6ygVFOWX5Cfn5wClMkpKCqxAOksqC0BKy1OT
+4qGGxCdl5qUAPQ/UUAbUnJmfp2RlCFSZXJIJMtXQxNDE2MDI2MRARym1oiCzKDU+
+E6TC1NzMwgAIQNakloFsT0tLtUhLTDO0tLAwsQR6Lck00cTS0jLVAqg2LcnE1DjF
+1MwgzTDN1DQlJcXcwNgsMdEgKTk50dTQwCTFNFEJ5K3CvHwlKyOgMxPTgUYWZ6bn
+JZaUgvx86EAMCwMjFwMbKxMo+hi4OAVgkTrRi/2fGs/sC33u/n8WJXp09vNbqgRc
+WHpIueRwh8IxoSduRj7VRi0zHK7eeHbsuL7bIhNGtkJ7hvKDrL8tFJr+ay7wfvjc
+/eEVJ+/2xWLqvSJt8zIE1C319ncqnup4dPvB9vbM/dE3d+QKRAlX2u2fdG56up7f
+xm1Om7utlZ/xVl18/eZEhKuzsBTrC//g3PP/Zvxj+X9hkf+urCVadX8nzhG9Z8nE
+Z155q3p2y6Kreddtwiwuz5zMtVyt/Zbuo7tB335vvjG1uO33Ji/lG+aODHK3CzUl
+NQ/N3uBVVcsuefHYio/vJeyeeb/2tdi8d1GSRqB3evPnDzFHZKb6Ltfqs/FS/lFz
+QG3x99DkDU37+n8DACSBE4Q=
+=d+Oo
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/theoperatore
+
+==================================================================
+
