@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Projects</title>
+    <title>Client-side authentication?! Totally</title>
     <meta name="viewport" content="width=device-width">
 
     <!-- syntax highlighting CSS -->
@@ -32,50 +32,35 @@
     </ul>
   </div>
 </header>
-        <div class="page">
+        <div class="post-container">
+  <h2 id="top">Client-side authentication?! Totally</h2>
+  <p class="meta">17 Dec 2014</p>
 
-  <h1>Hosted Web Projects</h1>
+  <div class="post">
+  <p>Recently I&#39;ve had to think about how to do a little user authenticaiton while using Firebase and Github Pages. I thought it might get kinda complicated because Github Pages only really hosts static files (hence the use of Firebase to handle persistence) and isn&#39;t too much of a &quot;server&quot; in the traditional sense.</p>
 
-<p>Here follows a list of my web apps, their sources, and a short description! Hooray!</p>
+<p>It basically means that I have to handle authentication in the client.</p>
 
-<h2>Triangulate</h2>
+<h2>Firebase is awesome</h2>
 
-<p>Made to help my sister track rehabilitated Red Hawks. Hooks into the Google Maps API to allow for easy triangulation and data computations.</p>
+<p>If you haven&#39;t used <a href="https://www.firebase.com/">Firebase</a> yet, consider checking it out. It&#39;s awesome for many reasons, but probably the coolest feature is real-time data syncing.</p>
 
-<p><a href="https://github.com/theoperatore/triangulate">source</a> : <a href="http://anpetersen.me/triangulate">app</a></p>
+<p>I&#39;m on Device A and my friend is on Device B. My friend adds in some data to the app we are both using and I get the added data on my app as well, automatically. Slick.</p>
 
-<h2>Chimera</h2>
+<p>It&#39;s other not-as-cool-but-still-amazing feature is client-side authentication. Need to keep track of a user and that user&#39;s permissions to operate on the database? Need to keep track of sessions across browser restart and offline status? Do you not want to handle all of this yourself?</p>
 
-<p>A D&amp;D Digital Character Sheet. Currently only supports 4th edition, hopefully soon to have a 5th edition sheet as well. Uses React.js and soon to use Firebase with real-time stat tracking, snapshots, and other features to help make your life easier so you can focus more on the campaign. </p>
+<p>Firebase is awesome. Let Firebase do it all for you.</p>
 
-<p><a href="https://github.com/theoperatore/chimera">source</a> : <a href="http://anpetersen.me/chimera">app</a></p>
+<h2>Authenticating a user</h2>
 
-<h2>Dawn</h2>
+<h2>Storing a new user</h2>
 
-<p>A text-adventure engine build in Java! Features a command parser with semi-natural language parsing.</p>
+  </div>
 
-<p><a href="https://github.com/theoperatore/dawn">source</a> : <a href="http://anpetersen.me/dawn">documentation</a></p>
-
-<h2>Bookprint</h2>
-
-<p>Upload any text file. Based on the parts of speech, see a unique image based on the uploaded text.</p>
-
-<p><a href="https://github.com/theoperatore/bookprint">source</a> : <a href="http://anpetersen.me/bookprint">app</a></p>
-
-<h2>Pixelatore</h2>
-
-<p>Lightning fast pixelation of any image!</p>
-
-<p><a href="https://github.com/theoperatore/pixelatore">source</a> : <a href="http://anpetersen.me/pixelatore">app</a></p>
-
-<h2>Super Party Horse</h2>
-
-<p>My first take on a javascript html5 game. You control a donkey and help protect the helpless cows from getting eaten by the relentless jaguars.</p>
-
-<p><a href="https://github.com/theoperatore/super-party-horse">source</a> : <a href="http://anpetersen.me/super-party-horse">site</a></p>
 
 
 </div>
+
         <footer>
 
   <div class="me">
