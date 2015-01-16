@@ -172,10 +172,6 @@ Congratulations! You just performed a coordinate transformation, specifically a 
 
 This is excatly what needs to happen because the canvas context will always assume that (0,0) is the top left of the canvas, and since the canvas is our camera, we have shifted the world space origin to be the the camera's current position which is the top left of the canvas.
 
-
-<span class="img-description">img showing world space origin moved to camera space?</span>
-
-
 Now that there is a way to translate any entity's current world space position to camera space, it can be drawn! But first there must be a check to see if the object is actually viewable by checking to see if it's within the bounds of the camera.
 
 Since the object's position is now in camera space, the camera bounding box starts at position `(0,0)` and has extremes `(width, height)`. This makes bounds checking easy:
