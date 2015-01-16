@@ -1,11 +1,19 @@
 ---
-layout: page
-title: 2D Physics Camera and Screen Shake
+layout: post
+title: For the Sake of Screen Shake!
 comments: true
 tags: javascript, game
 ---
 
-I watched [this video](https://www.youtube.com/watch?v=AJdEqssNZ-U) (a talk by Jan Willem Nijman from Vlambeer; 30 tiny tricks that will make your action game better) and got really excited about screen shake (too excited probably). It makes everything feel like it has weight and makes you, the player, feel really awesome. Here follows my take on making a camera for a Javascript game using the `<canvas>` and implementing screen shake. GO!
+I watched [this video](https://www.youtube.com/watch?v=AJdEqssNZ-U) (a talk by Jan Willem Nijman from Vlambeer; *30 tiny tricks that will make your action game better*) and got really excited about screen shake (too excited probably) so I made this [demo]({{site.baseurl}}/demos/shake/index.html) about smashing through yellow circles (asteroids?) as a little square ship dude. I'm sure a game is in there somewhere...I just have to fish it out (which I'll most likely do at some point).
+
+W,A,S,D to move your ship around and blast through the asteroids (sorry mobile users, keyboard only). 
+
+<img src="{{site.baseurl}}/assets/camera/asteroid-smash.gif">
+
+Notice how it **FEELS AWESOME** to smash through everything! That's the power of screen shake.
+
+Here follows my take on making a camera for a Javascript game using the `<canvas>` and implementing screen shake. GO!
 
 There seem to be two ways to do screen shake:
 
@@ -170,7 +178,7 @@ In camera space, `obj` has a position vector `(2,3)` meaning that if you start a
 
 Congratulations! You just performed a coordinate transformation, specifically a coordinate origin translation. Essentially, the world space origin has moved (translated) to be the camera's current position. The camera's current position is now the origin for `diff`.
 
-This is excatly what needs to happen because the canvas context will always assume that (0,0) is the top left of the canvas, and since the canvas is our camera, we have shifted the world space origin to be the the camera's current position which is the top left of the canvas.
+This is exactly what needs to happen because the canvas context will always assume that (0,0) is the top left of the canvas, and since the canvas is our camera, we have shifted the world space origin to be the the camera's current position which is the top left of the canvas.
 
 Now that there is a way to translate any entity's current world space position to camera space, it can be drawn! But first there must be a check to see if the object is actually viewable by checking to see if it's within the bounds of the camera.
 
@@ -344,7 +352,7 @@ Cool. All that's left is to implement the smooth panning from the camera's curre
 accel = accel + (target - curr) * step
 {% endhighlight %}
 
-Where `accel` is the current acceleration vector, `curr` is the current position vector, `target - curr` is relative direction vector between the target and the current position, and `step` is how much of the relative direction vector to add to the current vector.
+Where `accel` is the current acceleration vector, `target - curr` is relative direction vector between the target and the current position, and `step` is how much of the relative direction vector to add to the current vector.
 
 Instead of setting the camera's current position to the target position all at once, this function gives the camera a little nudge in the correct direction. It just so happens that using a velocity-like force (`target - curr`) controlled by the `step` variable works really well.
 
@@ -375,13 +383,13 @@ function update() {
 }
 {% endhighlight %}
 
-Excellent! Now wherever the player goes, the camera will follow. It is worth mentioning that the camera will follow wherever its `target` propery points. `target` could be calculated from the player, an enemy, a scripted scene, a mathematical soup of inputs, etc...go with what you feel.
+Excellent! Now wherever the player goes, the camera will follow. It is worth mentioning that the camera will follow wherever its `target` property points. `target` could be calculated from the player, an enemy, a scripted scene, a mathematical soup of inputs, etc...go with what you feel.
 
 It's also worth mentioning that the `step` value should be tweaked (most likely through trial and error) to find the best "feel" for the camera panning to it's proper location.
 
 ### Integrating a camera position
 
-To make this whole thing work correctly, just update the camera's position just like any other entity. As mentioned above I use verlet integration. Inserting the update code into the update function would look something like this:
+To make this whole thing work correctly, update the camera's position just like any other entity. As mentioned above I use verlet integration. Inserting the update code into the update function would look something like this:
 
 {% highlight javascript linenos %}
 // the game loop update function
@@ -466,7 +474,7 @@ Turns out, I already covered all of the hard stuff! Implementing screen shake is
 - how intense should the shaking be
 - how much to dampen the shaking each frame
 
-All three of these requirements will be assembled into an acceleration force that will be applied to the camera. No need to remember the original position of the camera, or calculate new positions from old positions&mdash;all of that is already taken care of in the "Follow that player!" section above. Since the shake is just an acceleration force, the target position for the camera does not change so the camera will naturally flow back to its intended position.
+All two of these requirements will be assembled into an acceleration force that will be applied to the camera. No need to remember the original position of the camera, or calculate new positions from old positions&mdash;all of that is already taken care of in the "Follow that player!" section above. Since the shake is just an acceleration force, the target position for the camera does not change so the camera will naturally flow back to its intended position.
 
 Adding more properties to the camera!
 
@@ -511,7 +519,7 @@ function update() {
   // SCREEN SHAKE
   if (camera.strength > 0) {
 
-    // get random acceleration on the interval [-strength, strength]
+    // get random acceleration on the interval [-strength, strength)
     var randx = Math.random() * 2 * camera.strength - camera.strength;
     var randy = Math.random() * 2 * camera.strength - camera.strength;
 
@@ -524,13 +532,7 @@ function update() {
 
   }
 
-  // apply some drag
-  ...
-
-  // update camera position -- verlet integration
-  ...
-
-  // reset accel
+  // a bunch of verlet stuff
   ...
 
   // bound camera to world edges if applicable
@@ -545,7 +547,9 @@ function update() {
 }
 {% endhighlight %}
 
-The random acceleration will make the camera jerk (shake) the most violent at the start, then die down due to the `damper`, and eventually the camera will return to the target position. To make this start, set the camera properties:
+The random acceleration will make the camera jerk (shake) the most violent at the start, then die down due to the `damper`, and eventually the camera will return to the target position. 
+
+To make this start, set the camera properties:
 
 {% highlight javascript linenos %}
 // start shaking!
@@ -573,11 +577,12 @@ However, I realize that this might be hard to implement into every system, so I'
   - it has position, velocity, and acceleration like everything else in your game
 - To follow an object is to define a target point for your camera
   - slowly move the camera to the target position over many frames via acceleration forces
-- Shaking the camera is the same as adding random acceleration forces to the camera
+- Camera Shake
+  - add random acceleration forces on a strength interval which die down over many frames
 
 Getting the camera to do what you want is really tricky. It requires a lot of trial and error to get the right "feel", but having a camera is really important and having a camera that works and feels correct is even more important. 
 
-One last noteworthy topic is that while you can try to do most of these physics things yourself, consider getting a physics library; even a small one. I use [pocket-physics](https://github.com/kirbysayshi/pocket-physics). It's lightweight, on npm, and handles calculating verlet integrations, drag, distance constraints, spring constratints, gravitation, allows work on vectors directly, etc; all of the cool physics-y things you'd ever want. 
+One last noteworthy topic is that while you can try to do most of these physics things yourself, consider getting a physics library&mdash;even a small one. I use [pocket-physics](https://github.com/kirbysayshi/pocket-physics). It's lightweight, on npm, and handles calculating verlet integrations, drag, distance constraints, spring constratints, gravitation, allows work on vectors directly, etc; all of the cool physics-y things you'd ever want. 
 
 Well hopefully that made sense.
 
@@ -585,7 +590,9 @@ Well hopefully that made sense.
 
 Wait! *What kind of post would this be without a demo?!* 
 
-He's a codepen. You might have to rerun the results pane, and give the canvas focus by clicking on it once it's reloaded. 
+He's a codepen. It doesn't have crazy smashing like the demo does, but it illustrates the point of camera following a player with screen shaking. You might have to rerun the results pane, and give the canvas focus by clicking on it once it's reloaded. Otherwise go nuts! 
+
+Also, so you don't have to scroll to the top of the page, check out the [super awesome asteroids collision bonanaza]({{site.baseurl}}/demos/shake/index.html). Same controls as the codepen (sorry mobile users, keyboard only).
 
 (W,A,S,D to move, Shift to shake, ESC to stop animations):
 

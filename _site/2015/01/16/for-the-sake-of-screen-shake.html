@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>2D Physics Camera and Screen Shake</title>
+    <title>For the Sake of Screen Shake!</title>
     <meta name="viewport" content="width=device-width">
 
     <!-- syntax highlighting CSS -->
@@ -36,11 +36,19 @@
   </div>
 </header>
         <div class="post-container">
-  <h2 id="top">2D Physics Camera and Screen Shake</h2>
+  <h2 id="top">For the Sake of Screen Shake!</h2>
   <p class="meta">16 Jan 2015</p>
 
   <div class="post">
-  <p>I watched <a href="https://www.youtube.com/watch?v=AJdEqssNZ-U">this video</a> (a talk by Jan Willem Nijman from Vlambeer; 30 tiny tricks that will make your action game better) and got really excited about screen shake (too excited probably). It makes everything feel like it has weight and makes you, the player, feel really awesome. Here follows my take on making a camera for a Javascript game using the <code>&lt;canvas&gt;</code> and implementing screen shake. GO!</p>
+  <p>I watched <a href="https://www.youtube.com/watch?v=AJdEqssNZ-U">this video</a> (a talk by Jan Willem Nijman from Vlambeer; <em>30 tiny tricks that will make your action game better</em>) and got really excited about screen shake (too excited probably) so I made this <a href="/demos/shake/index.html">demo</a> about smashing through yellow circles (asteroids?) as a little square ship dude. I’m sure a game is in there somewhere…I just have to fish it out (which I’ll most likely do at some point).</p>
+
+<p>W,A,S,D to move your ship around and blast through the asteroids (sorry mobile users, keyboard only). </p>
+
+<p><img src="/assets/camera/asteroid-smash.gif" /></p>
+
+<p>Notice how it <strong>FEELS AWESOME</strong> to smash through everything! That’s the power of screen shake.</p>
+
+<p>Here follows my take on making a camera for a Javascript game using the <code>&lt;canvas&gt;</code> and implementing screen shake. GO!</p>
 
 <p>There seem to be two ways to do screen shake:</p>
 
@@ -198,7 +206,7 @@
 
 <p>Congratulations! You just performed a coordinate transformation, specifically a coordinate origin translation. Essentially, the world space origin has moved (translated) to be the camera’s current position. The camera’s current position is now the origin for <code>diff</code>.</p>
 
-<p>This is excatly what needs to happen because the canvas context will always assume that (0,0) is the top left of the canvas, and since the canvas is our camera, we have shifted the world space origin to be the the camera’s current position which is the top left of the canvas.</p>
+<p>This is exactly what needs to happen because the canvas context will always assume that (0,0) is the top left of the canvas, and since the canvas is our camera, we have shifted the world space origin to be the the camera’s current position which is the top left of the canvas.</p>
 
 <p>Now that there is a way to translate any entity’s current world space position to camera space, it can be drawn! But first there must be a check to see if the object is actually viewable by checking to see if it’s within the bounds of the camera.</p>
 
@@ -357,7 +365,7 @@
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// calculate force in the direction of the target</span>
 <span class="nx">accel</span> <span class="o">=</span> <span class="nx">accel</span> <span class="o">+</span> <span class="p">(</span><span class="nx">target</span> <span class="o">-</span> <span class="nx">curr</span><span class="p">)</span> <span class="o">*</span> <span class="nx">step</span></code></pre></div>
 
-<p>Where <code>accel</code> is the current acceleration vector, <code>curr</code> is the current position vector, <code>target - curr</code> is relative direction vector between the target and the current position, and <code>step</code> is how much of the relative direction vector to add to the current vector.</p>
+<p>Where <code>accel</code> is the current acceleration vector, <code>target - curr</code> is relative direction vector between the target and the current position, and <code>step</code> is how much of the relative direction vector to add to the current vector.</p>
 
 <p>Instead of setting the camera’s current position to the target position all at once, this function gives the camera a little nudge in the correct direction. It just so happens that using a velocity-like force (<code>target - curr</code>) controlled by the <code>step</code> variable works really well.</p>
 
@@ -386,13 +394,13 @@
 <span class="lineno">23</span> 
 <span class="lineno">24</span> <span class="p">}</span></code></pre></div>
 
-<p>Excellent! Now wherever the player goes, the camera will follow. It is worth mentioning that the camera will follow wherever its <code>target</code> propery points. <code>target</code> could be calculated from the player, an enemy, a scripted scene, a mathematical soup of inputs, etc…go with what you feel.</p>
+<p>Excellent! Now wherever the player goes, the camera will follow. It is worth mentioning that the camera will follow wherever its <code>target</code> property points. <code>target</code> could be calculated from the player, an enemy, a scripted scene, a mathematical soup of inputs, etc…go with what you feel.</p>
 
 <p>It’s also worth mentioning that the <code>step</code> value should be tweaked (most likely through trial and error) to find the best “feel” for the camera panning to it’s proper location.</p>
 
 <h3 id="integrating-a-camera-position">Integrating a camera position</h3>
 
-<p>To make this whole thing work correctly, just update the camera’s position just like any other entity. As mentioned above I use verlet integration. Inserting the update code into the update function would look something like this:</p>
+<p>To make this whole thing work correctly, update the camera’s position just like any other entity. As mentioned above I use verlet integration. Inserting the update code into the update function would look something like this:</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="lineno"> 1</span> <span class="c1">// the game loop update function</span>
 <span class="lineno"> 2</span> <span class="kd">function</span> <span class="nx">update</span><span class="p">()</span> <span class="p">{</span>
@@ -477,7 +485,7 @@
   <li>how much to dampen the shaking each frame</li>
 </ul>
 
-<p>All three of these requirements will be assembled into an acceleration force that will be applied to the camera. No need to remember the original position of the camera, or calculate new positions from old positions—all of that is already taken care of in the “Follow that player!” section above. Since the shake is just an acceleration force, the target position for the camera does not change so the camera will naturally flow back to its intended position.</p>
+<p>All two of these requirements will be assembled into an acceleration force that will be applied to the camera. No need to remember the original position of the camera, or calculate new positions from old positions—all of that is already taken care of in the “Follow that player!” section above. Since the shake is just an acceleration force, the target position for the camera does not change so the camera will naturally flow back to its intended position.</p>
 
 <p>Adding more properties to the camera!</p>
 
@@ -520,7 +528,7 @@
 <span class="lineno">13</span>   <span class="c1">// SCREEN SHAKE</span>
 <span class="lineno">14</span>   <span class="k">if</span> <span class="p">(</span><span class="nx">camera</span><span class="p">.</span><span class="nx">strength</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 <span class="lineno">15</span> 
-<span class="lineno">16</span>     <span class="c1">// get random acceleration on the interval [-strength, strength]</span>
+<span class="lineno">16</span>     <span class="c1">// get random acceleration on the interval [-strength, strength)</span>
 <span class="lineno">17</span>     <span class="kd">var</span> <span class="nx">randx</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">camera</span><span class="p">.</span><span class="nx">strength</span> <span class="o">-</span> <span class="nx">camera</span><span class="p">.</span><span class="nx">strength</span><span class="p">;</span>
 <span class="lineno">18</span>     <span class="kd">var</span> <span class="nx">randy</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">camera</span><span class="p">.</span><span class="nx">strength</span> <span class="o">-</span> <span class="nx">camera</span><span class="p">.</span><span class="nx">strength</span><span class="p">;</span>
 <span class="lineno">19</span> 
@@ -533,27 +541,23 @@
 <span class="lineno">26</span> 
 <span class="lineno">27</span>   <span class="p">}</span>
 <span class="lineno">28</span> 
-<span class="lineno">29</span>   <span class="c1">// apply some drag</span>
+<span class="lineno">29</span>   <span class="c1">// a bunch of verlet stuff</span>
 <span class="lineno">30</span>   <span class="p">...</span>
 <span class="lineno">31</span> 
-<span class="lineno">32</span>   <span class="c1">// update camera position -- verlet integration</span>
+<span class="lineno">32</span>   <span class="c1">// bound camera to world edges if applicable</span>
 <span class="lineno">33</span>   <span class="p">...</span>
 <span class="lineno">34</span> 
-<span class="lineno">35</span>   <span class="c1">// reset accel</span>
+<span class="lineno">35</span>   <span class="c1">// update entity positions / collisions</span>
 <span class="lineno">36</span>   <span class="p">...</span>
 <span class="lineno">37</span> 
-<span class="lineno">38</span>   <span class="c1">// bound camera to world edges if applicable</span>
+<span class="lineno">38</span>   <span class="c1">// update player positions / collisions</span>
 <span class="lineno">39</span>   <span class="p">...</span>
 <span class="lineno">40</span> 
-<span class="lineno">41</span>   <span class="c1">// update entity positions / collisions</span>
-<span class="lineno">42</span>   <span class="p">...</span>
-<span class="lineno">43</span> 
-<span class="lineno">44</span>   <span class="c1">// update player positions / collisions</span>
-<span class="lineno">45</span>   <span class="p">...</span>
-<span class="lineno">46</span> 
-<span class="lineno">47</span> <span class="p">}</span></code></pre></div>
+<span class="lineno">41</span> <span class="p">}</span></code></pre></div>
 
-<p>The random acceleration will make the camera jerk (shake) the most violent at the start, then die down due to the <code>damper</code>, and eventually the camera will return to the target position. To make this start, set the camera properties:</p>
+<p>The random acceleration will make the camera jerk (shake) the most violent at the start, then die down due to the <code>damper</code>, and eventually the camera will return to the target position. </p>
+
+<p>To make this start, set the camera properties:</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="lineno">1</span> <span class="c1">// start shaking!</span>
 <span class="lineno">2</span> <span class="nx">camera</span><span class="p">.</span><span class="nx">strength</span> <span class="o">=</span> <span class="mi">90</span><span class="p">;</span>
@@ -589,12 +593,16 @@
       <li>slowly move the camera to the target position over many frames via acceleration forces</li>
     </ul>
   </li>
-  <li>Shaking the camera is the same as adding random acceleration forces to the camera</li>
+  <li>Camera Shake
+    <ul>
+      <li>add random acceleration forces on a strength interval which die down over many frames</li>
+    </ul>
+  </li>
 </ul>
 
 <p>Getting the camera to do what you want is really tricky. It requires a lot of trial and error to get the right “feel”, but having a camera is really important and having a camera that works and feels correct is even more important. </p>
 
-<p>One last noteworthy topic is that while you can try to do most of these physics things yourself, consider getting a physics library; even a small one. I use <a href="https://github.com/kirbysayshi/pocket-physics">pocket-physics</a>. It’s lightweight, on npm, and handles calculating verlet integrations, drag, distance constraints, spring constratints, gravitation, allows work on vectors directly, etc; all of the cool physics-y things you’d ever want. </p>
+<p>One last noteworthy topic is that while you can try to do most of these physics things yourself, consider getting a physics library—even a small one. I use <a href="https://github.com/kirbysayshi/pocket-physics">pocket-physics</a>. It’s lightweight, on npm, and handles calculating verlet integrations, drag, distance constraints, spring constratints, gravitation, allows work on vectors directly, etc; all of the cool physics-y things you’d ever want. </p>
 
 <p>Well hopefully that made sense.</p>
 
@@ -602,7 +610,9 @@
 
 <p>Wait! <em>What kind of post would this be without a demo?!</em> </p>
 
-<p>He’s a codepen. You might have to rerun the results pane, and give the canvas focus by clicking on it once it’s reloaded. </p>
+<p>He’s a codepen. It doesn’t have crazy smashing like the demo does, but it illustrates the point of camera following a player with screen shaking. You might have to rerun the results pane, and give the canvas focus by clicking on it once it’s reloaded. Otherwise go nuts! </p>
+
+<p>Also, so you don’t have to scroll to the top of the page, check out the <a href="/demos/shake/index.html">super awesome asteroids collision bonanaza</a>. Same controls as the codepen (sorry mobile users, keyboard only).</p>
 
 <p>(W,A,S,D to move, Shift to shake, ESC to stop animations):</p>
 
