@@ -1,3 +1,6 @@
 name: Alex.Petersen
-markdown: redcarpet
-hightlighter: true
+markdown: kramdown
+hightlighter: pygments
+
+kramdown:
+  input: GFM
