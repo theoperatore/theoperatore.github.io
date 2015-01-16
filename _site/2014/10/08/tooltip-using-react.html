@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Creating a Tooltip using React.js</title>
+    <meta name="viewport" content="width=device-width">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- Mathjax -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+    <body>
+
+      <div class="site">
+        <header>
+  <div class="header-content">
+    <h1 class="title"><a href="/">Alex.Petersen</a></h1>
+
+    <img src="/assets/icon-menu.svg" id="menu-toggle">
+
+    <ul id="nav">
+      <!--<li><a href="/about/">about</a></li>-->
+      <li><a href="/">posts</a></li>
+      <li><a href="/#projects">projects</a></li>
+      <li><a href="http://careers.stackoverflow.com/anpetersen">resume</a>
+    </ul>
+  </div>
+</header>
+        <div class="post-container">
+  <h2 id="top">Creating a Tooltip using React.js</h2>
+  <p class="meta">08 Oct 2014</p>
+
+  <div class="post">
+  <p>In one of my recent apps I decided that a solution to a UI problem would be best solved by using some sort of tooltip or popover, similar to <a href="http://getbootstrap.com/">Bootstrap</a>.</p>
+
+<p>I wanted to hide away some secondary information but at the same time allow for a user to access that hidden information and interact with it by modifying existing info, creating new info, or deleting unwanted info.</p>
+
+<p>However I have been using <a href="http://facebook.github.io/react/">React.js</a> to build the entire user interface. While I could have done some Bootstrap - React cross play, I decided that I didn’t want to mess with compatibility and instead try to make a tooltip in the style of a Bootstrap Popover using soley React components (and of course a little CSS).</p>
+
+<p><em>In this post I’m using popover to refer to a Bootstrap Popover and tooltip to refer to the React component that simulates a Bootstrap Popover. Note that a <a href="http://getbootstrap.com/javascript/#tooltips">Bootstrap Tooltip</a> is different than a <a href="http://getbootstrap.com/javascript/#popovers">Bootstrap Popover</a></em></p>
+
+<h3 id="mixing-react-and-bootstrap">Mixing React and Bootstrap</h3>
+
+<p>Before I get into making the tooltip component I want to talk about about why it might be difficult to use both React and Bootstrap together for this particular problem.</p>
+
+<p>A popover is easy to configure and display:</p>
+
+<iframe width="100%" height="250" src="http://jsfiddle.net/theoperatore/5j5xhxrz/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<p>If you wanted to have HTML rendered inside a popover, you just need to use a little more javascript to set some options:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// inside the js part of the above fiddle...</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#example&#39;</span><span class="p">).</span><span class="nx">popover</span><span class="p">({</span>
+  <span class="nx">html</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nx">content</span><span class="o">:</span> <span class="s2">&quot;&lt;div class=&#39;inside&#39;&gt;&lt;h1&gt;I&#39;m a Title&lt;/h1&gt;&lt;p&gt;And I&#39;m the content. Hooray!&lt;/p&gt;&lt;/div&gt;&quot;</span>
+<span class="p">});</span></code></pre></div>
+
+<p>Bootstrap makes it easy to create a popover with any content you’d like. Even if you wanted some interaction with the popover, like displaying a form for a user to fill out, you’d just have to hook into the popover’s events and handle accordingly.</p>
+
+<p>Things get a little more complicated when you start trying to throw a React component inside a popover. </p>
+
+<p>The <code>content</code> attribute of the popover is able to take a function or a string of html. Since React components (after using createClass) are functions themselves, it might seem that inserting the component function into the <code>content</code> attribute would solve the problem.</p>
+
+<p>However, this doesn’t work. Bootstrap isn’t equiped to handle rendering a React component as a React component.</p>
+
+<p>Maybe if I had the HTML of my component, I could use that as a string instead. The problem now becomes, <em>how do I get the HTML of my component</em>? Good thing React has a built-in function to do that for you: </p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="lineno"> 1</span> <span class="c1">// Component to render</span>
+<span class="lineno"> 2</span> <span class="kd">var</span> <span class="nx">Tooltip</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+<span class="lineno"> 3</span>   <span class="nx">render</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="lineno"> 4</span>     <span class="k">return</span> <span class="p">(</span><span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">h1</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">displayName</span><span class="p">));</span>
+<span class="lineno"> 5</span>   <span class="p">}</span>
+<span class="lineno"> 6</span> <span class="p">});</span>
+<span class="lineno"> 7</span> 
+<span class="lineno"> 8</span> <span class="c1">// time for rendering, get HTML of component</span>
+<span class="lineno"> 9</span> <span class="kd">var</span> <span class="nx">tooltip</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">renderComponentToString</span><span class="p">(</span><span class="nx">Tooltip</span><span class="p">({</span><span class="nx">displayName</span> <span class="o">:</span> <span class="s2">&quot;Gargantua-1 Eats You&quot;</span><span class="p">}));</span>
+<span class="lineno">10</span> 
+<span class="lineno">11</span> <span class="c1">// feed Bootstrap popover your component string</span>
+<span class="lineno">12</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#example&#39;</span><span class="p">).</span><span class="nx">popover</span><span class="p">({</span>
+<span class="lineno">13</span>   <span class="nx">html</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="lineno">14</span>   <span class="nx">content</span><span class="o">:</span> <span class="nx">tooltip</span>
+<span class="lineno">15</span> <span class="p">});</span></code></pre></div>
+
+<p>With result: </p>
+
+<iframe width="100%" height="300" src="http://jsfiddle.net/theoperatore/433b83pp/embedded/result,js,html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<p>This fix might work if all of your tooltips have static parts, where user interaction isn’t needed.</p>
+
+<p>However, because you are rendering the React component to a string, React never has time to attach its own event listeners to listen for state changes. If an interaction in the popover results in a state change, React can’t update your layout because there isn’t anything listening to the popover. </p>
+
+<p>Bad news since we need the tooltip to handle user interaction.</p>
+
+<h3 id="creating-a-react-tooltip">Creating a React Tooltip</h3>
+
+<p>Now we create the tooltip in React. By using only a React component, we can ensure that the interactivity is conserved. The tooltip we will create will simulate an inventory with each item having a name and description.</p>
+
+<p>To begin, we make the <code>Tooltip</code> component:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="lineno"> 1</span> <span class="kd">var</span> <span class="nx">Tooltip</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+<span class="lineno"> 2</span>   
+<span class="lineno"> 3</span>   <span class="c1">// set up empty list</span>
+<span class="lineno"> 4</span>   <span class="nx">getInitialState</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> 
+<span class="lineno"> 5</span>     <span class="k">return</span> <span class="p">{</span> <span class="nx">inventory</span> <span class="o">:</span> <span class="p">[],</span> <span class="nx">text</span> <span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nx">desc</span> <span class="o">:</span> <span class="s2">&quot;&quot;</span> <span class="p">};</span> 
+<span class="lineno"> 6</span>   <span class="p">},</span>
+<span class="lineno"> 7</span> 
+<span class="lineno"> 8</span>   <span class="c1">// handle input</span>
+<span class="lineno"> 9</span>   <span class="nx">handleChange</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno">10</span>     <span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="lineno">11</span>     <span class="nx">out</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">ref</span><span class="p">]</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+<span class="lineno">12</span>     <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">out</span><span class="p">);</span>
+<span class="lineno">13</span>   <span class="p">},</span>
+<span class="lineno">14</span> 
+<span class="lineno">15</span>   <span class="c1">// handle adding a new item</span>
+<span class="lineno">16</span>   <span class="nx">handleAdd</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="lineno">17</span>     <span class="kd">var</span> <span class="nx">list</span><span class="p">,</span> <span class="nx">item</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="lineno">18</span> 
+<span class="lineno">19</span>     <span class="nx">item</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
+<span class="lineno">20</span>     <span class="nx">item</span><span class="p">.</span><span class="nx">desc</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">desc</span><span class="p">;</span>
+<span class="lineno">21</span>       
+<span class="lineno">22</span>     <span class="nx">list</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">inventory</span><span class="p">.</span><span class="nx">concat</span><span class="p">([</span><span class="nx">item</span><span class="p">]);</span>
+<span class="lineno">23</span>     <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span> <span class="nx">inventory</span> <span class="o">:</span> <span class="nx">list</span><span class="p">,</span> <span class="nx">text</span> <span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nx">desc</span> <span class="o">:</span> <span class="s2">&quot;&quot;</span> <span class="p">});</span>
+<span class="lineno">24</span>   <span class="p">},</span>
+<span class="lineno">25</span> 
+<span class="lineno">26</span>   <span class="c1">// render the component</span>
+<span class="lineno">27</span>   <span class="nx">render</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="lineno">28</span>  
+<span class="lineno">29</span>     <span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="lineno">30</span>     <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">inventory</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno">31</span> 
+<span class="lineno">32</span>       <span class="nx">items</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
+<span class="lineno">33</span>         <span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">li</span><span class="p">({</span> <span class="nx">key</span><span class="o">:</span> <span class="nx">i</span> <span class="p">},</span> <span class="nx">item</span><span class="p">.</span><span class="nx">text</span> <span class="o">+</span> <span class="s2">&quot; -- &quot;</span><span class="p">,</span> <span class="nx">item</span><span class="p">.</span><span class="nx">desc</span><span class="p">)</span>
+<span class="lineno">34</span>       <span class="p">);</span>
+<span class="lineno">35</span> 
+<span class="lineno">36</span>     <span class="p">},</span> <span class="k">this</span><span class="p">);</span>
+<span class="lineno">37</span> 
+<span class="lineno">38</span>     <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">div</span><span class="p">({</span> <span class="nx">className</span> <span class="o">:</span> <span class="s2">&quot;tooltip&quot;</span> <span class="p">},</span>
+<span class="lineno">39</span>       <span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">h1</span><span class="p">({</span> <span class="nx">className</span> <span class="o">:</span> <span class="s2">&quot;descriptor&quot;</span> <span class="p">},</span> <span class="s2">&quot;Inventory&quot;</span><span class="p">),</span>
+<span class="lineno">40</span>       <span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">ul</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">items</span><span class="p">),</span>
+<span class="lineno">41</span>       <span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span> <span class="s2">&quot;data-ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="nx">type</span> <span class="o">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="nx">placeholder</span> <span class="o">:</span> <span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">text</span><span class="p">,</span> <span class="nx">onChange</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span> <span class="p">}),</span>
+<span class="lineno">42</span>       <span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span> <span class="s2">&quot;data-ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;desc&quot;</span><span class="p">,</span> <span class="nx">type</span> <span class="o">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="nx">placeholder</span> <span class="o">:</span> <span class="s2">&quot;Desc&quot;</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">desc</span><span class="p">,</span> <span class="nx">onChange</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span> <span class="p">}),</span>
+<span class="lineno">43</span>       <span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span> <span class="nx">type</span> <span class="o">:</span> <span class="s2">&quot;button&quot;</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="nx">onClick</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleAdd</span> <span class="p">})</span>
+<span class="lineno">44</span>     <span class="p">);</span>
+<span class="lineno">45</span>   <span class="p">}</span>
+<span class="lineno">46</span> <span class="p">});</span></code></pre></div>
+
+<h3 id="alternatives">Alternatives</h3>
+
+<p>React and Bootstrap don’t play nice together, but there are alternatives if you want to <a href="http://grist.files.wordpress.com/2013/08/tina-fey-burger.gif?w=245&amp;h=160">have it all</a>.</p>
+
+
+  </div>
+
+
+
+</div>
+
+        <footer>
+
+  <div class="me">
+    <div class="highlight-img">
+      <div class="me-img">
+        <img src="/assets/me-img.png"/>
+        <img class="easter-egg" src="/assets/nu-side.png"/>
+      </div>
+    </div>
+    <div>
+      <div class="me-description">
+        <p>Heyo! I'm Alex.</p>
+        <p>I try to write about neat things&mdash;mainly programming things and thoughts on games I'm playing right now</p>
+        <p>I code with the mantra "Make anything cool today?"</p>
+        <a href="https://github.com/theoperatore"><img src="/assets/GitHub-Mark.svg"/></a>
+        <a href="https://twitter.com/theoperatore"><img src="/assets/twitter.svg"/></a>
+        <a href="mailto:theoperatore@gmail.com"><img src="/assets/envelope.svg"/></a>
+
+      </div>
+    </div>
+  </div> 
+
+
+  &copy;2014 -- Made using <a target="_blank" href='http://jekyllrb.com/'>Jekyll</a> hosted on <a target='_blank' href='http://pages.github.com/'>GitHub</a>
+</footer>
+      </div>
+
+
+      <script type="text/javascript">
+
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+
+          document.getElementById('nav').classList.toggle('show');
+
+        }, false);
+
+      </script>   
+    </body>
+</html>

@@ -12,7 +12,7 @@ There seem to be two ways to do screen shake:
 - Shake every object on the screen
 - Shake the camera
 
-I'm going to focus on the latter and therefore, need to make a camera. But not just any camera, a physics based camera. One with acceleration and velocity and everything.
+I'm going to focus on the latter, and therefore need to make a camera. But not just any camera&mdash;a physics based camera. One with acceleration and velocity and everything.
 
 Let's get a few things straight first.
 
@@ -22,13 +22,13 @@ The camera is the window into the world of the game; it defines what the player 
 
 *World space* is the world in which all of the objects in a game reside; the player's character, environment, enemies, and any other entities. It is the global coordinate space. Anything that will ever exist in the game will have a starting position based on this coordinate system.
 
-![world space]({{site.baseurl}}/assets/camera/world-space-edit.png)
-<span class="img-description">Figure 1&mdash;world space (blue) with entities; no camera</span>
+![world space]({{site.baseurl}}/assets/camera/world-space.png)
+<span class="img-description">Figure 1&mdash;The world space with player and entities. Notice that the world space origin is the top left corner of the space.</span>
 
 *Camera space* is the bounding area that is viewable at any point in time. Only objects that are within the bounds of the camera space will be visible to the player and drawn on the screen.
 
-![world space]({{site.baseurl}}/assets/camera/world-space-camera.png)
-<span class="img-description">Figure 2&mdash;camera space (in green) viewing a section of world space (blue)</span>
+![world space showing camera space]({{site.baseurl}}/assets/camera/world-space-showing-camera.png)
+<span class="img-description">Figure 2&mdash;Camera space has it's own coordinate axes (also starting at the top left of the space). Only entities within the bounds of the camera are seen by the player. The camera space is the same as the canvas.</span>
 
 Since this is an article about using the `<canvas>`, the camera is equivalent to the canvas. When drawing, the canvas context assumes camera space. No matter where the camera object is positioned, if the canvas context is called to draw something at (0,0) the object will be at the top left of the screen (because that's where the origin is for computer graphics).
 
@@ -129,7 +129,7 @@ To draw anything, first figure out if the object to draw is within the bounds of
 
 Subtract the camera's position from the object's position. This gives the object's current position relative to the camera.
 
-![subtracting vectors]({{site.baseurl}}/assets/camera/draw-on-camera.png)
+![subtracting vectors]({{site.baseurl}}/assets/camera/entity-to-camera-space.png)
 <span class="img-description">Figure 3&mdash;from world origin (0,0) at top-left corner, subtract the camera's position vector (c) from the object's position vector (p) to find the object's position vector relative to the camera's position (d)</span>
 
 and the code:
@@ -203,8 +203,8 @@ if ( (diff.x >= 0 && diff.x <= camera.width) &&
 
 But if you test this out you might notice that some large objects tend to "pop-in" or "pop-out" when they leave the screen. That's becasue the camera is culling too early; the camera should start drawing while entities are off-screen in order to have them smoothly enter or exit the player's view. This is where `cullDist` comes into play.
 
-![adding cullDist to the camera]({{site.baseurl}}/assets/camera/camera-cullDist.png)
-<span class="img-description">Figure 4&mdash;if an entity lies within the bounds of the camera plus the pink culling field, draw it</span>
+![adding cullDist to the camera]({{site.baseurl}}/assets/camera/cull-dist.png)
+<span class="img-description">Figure 4&mdash;if an entity lies within the bounds of the camera plus the culling field, draw it</span>
 
 Just update the camera bounds check to use `cullDist` and everything is good to go:
 
