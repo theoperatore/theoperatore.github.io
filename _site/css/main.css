@@ -31,6 +31,12 @@ a:hover { text-decoration: underline; }
 p { margin: 1.55em 0; line-height: 1.55em; }
 ul { margin: 1em auto; }
 
+blockquote {
+  padding: 5px 0px 5px 15px;
+  color: #aaa;
+  border-left: 5px solid #ccc;
+}
+
 /*****************************************************************************/
 /*
 /* Home
@@ -78,7 +84,7 @@ ul { margin: 1em auto; }
 }
 
 .posts-container {
-  max-width: 640px;
+  max-width: 700px;
   margin:2em auto;
   padding: 10px;
 }
@@ -107,6 +113,13 @@ img { width: 100%; }
   font-size:small;
   text-align: center;
   color: #777;
+}
+
+.project {
+  padding: 10px;
+  /*border: 1px solid #ccc;*/
+  border-radius: 5pt;
+  margin-top: 1.5em;
 }
 
 header { border-bottom: 1px solid #ddd; }
@@ -146,6 +159,7 @@ footer {
   font-size: small;
   text-align: center;
   padding-bottom: 1em;
+  border-top: 1px solid #ccc;
 }
 footer img {
   width: 20px;
@@ -160,7 +174,7 @@ footer a { margin-right: 5px; }
   font-size: 16px;
   padding:10px 12px;
   text-align: left;
-  max-width: 640px;
+  max-width: 700px;
   margin: 2em auto;
 }
 .me:after {
@@ -178,6 +192,7 @@ footer a { margin-right: 5px; }
 }
 .me-img {
   max-width: 150px;
+  height: 190px;
   overflow: hidden;
 }
 .me-img > img {
@@ -211,7 +226,7 @@ footer a { margin-right: 5px; }
 /*
 /*****************************************************************************/
 .page {
-  max-width: 640px;
+  max-width: 700px;
   margin:0 auto; 
   padding:10px;
   margin-top: 3em;
@@ -223,7 +238,7 @@ footer a { margin-right: 5px; }
 /*
 /*****************************************************************************/
 .post-container {
-  max-width: 640px; 
+  max-width: 700px; 
   margin:2em auto; 
   padding:10px 12px; 
 }
