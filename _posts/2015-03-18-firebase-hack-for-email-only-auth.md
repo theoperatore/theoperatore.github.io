@@ -100,11 +100,78 @@ I'm just of the mindset that we shouldn't be storing anything like that client-s
 
 **Man, chaining these Firebase functions together gets a litle 'callback hell-esque'**
 
-It sure does...All Firebase built-in functions are async. However, if you wrap each Firebase function in a function that returns a [Promise](http://www.html5rocks.com/en/tutorials/es6/promises/) you'll have better control over their order of execution, especially for creating a new user and sending an email. 
+It sure does...All Firebase built-in functions are async. However, if you wrap each Firebase function in a function that returns a [Promise](http://www.html5rocks.com/en/tutorials/es6/promises/) you'll have better control over their order of execution, especially for creating a new user and sending an email since those should happen sequentially.
 
-You only want to send a `resetPassword()` email on log in or **IFF** a new user account has been successfully created. If there is an error during user account creation, bail out! and don't send the email.
+Creating a user with something like:
 
-Promises can help with that.
+{% highlight javascript %}
+// create a user
+function createUser(email) {
+  return new Promise((resolve, reject) => {
+    let user = {};
+    let pass = generatePass();
+
+    user.email = email;
+    user.password = pass;
+
+    FirebaseRef.createUser(user, (err, payload) => {
+      if (err) {
+        reject(err);
+      }
+      else {
+        resolve(payload);
+      }
+    })
+  })
+}
+{% endhighlight %}
+
+And sending an email with:
+
+{% highlight javascript %}
+// send auth token
+function sendEmail(email) {
+  return new Promise((resolve, reject) => {
+    let user = {};
+
+    user.email = email;
+    
+    FirebaseRef.resetPassword(user, (err) => {
+      if (err) {
+        reject(err);
+      }
+      else {
+        resolve("Email sent successfully");
+      }
+    })
+  })
+}
+{% endhighlight %}
+
+You only want to send a `resetPassword()` email on log in or **IFF** a new user account has been successfully created. If there is an error during user account creation, bail out! and don't send the email:
+
+{% highlight javascript %}
+// now use these promises
+createUser(email).then((payload) => {
+
+  // user created! send email
+  return sendEmail(email);
+
+}).then((result) => {
+
+  // "Email sent successfully"
+  console.log(result);
+
+}).catch((err) => {
+  
+  console.log("Terrible things happened!");
+
+})
+{% endhighlight %}
+
+If something happens during account creation, the email won't be sent and execution will instead move to the `catch()` handler.
+
+Much more manageable. Yeah Promies!
 
 ### Whew!
 
@@ -118,6 +185,6 @@ The goal of which is to:
 
 Although, if you have access to any sort of server and you want email-only authentication, then you should really be using [custom authentication](https://www.firebase.com/docs/web/guide/login/custom.html) and use the built-in authentication the way it was intended to be used.
 
-The end.
+The end. Hopefully this was insightful.
 
 Thanks for reading!

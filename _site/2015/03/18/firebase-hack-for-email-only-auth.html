@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <meta charset="utf-8">
+    <meta name="description" content="The personal blog of Alex Petersen. Covers games, coding stuff, and other neat things." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Email-only Auth with Firebase?!</title>
+    <meta name="viewport" content="width=device-width">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- Mathjax -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+    <body>
+
+      <div class="site">
+        <header>
+  <div class="header-content">
+    <h1 class="title"><a href="/">Alex.Petersen</a></h1>
+
+    <img src="/assets/icon-menu.svg" id="menu-toggle">
+
+    <ul id="nav">
+      <!--<li><a href="/about/">about</a></li>-->
+      <li><a href="/">posts</a></li>
+      <li><a href="/#projects">projects</a></li>
+      <li><a href="http://careers.stackoverflow.com/anpetersen">resume</a>
+    </ul>
+  </div>
+</header>
+        <div class="post-container">
+  <h2 id="top">Email-only Auth with Firebase?!</h2>
+  <p class="meta">18 Mar 2015</p>
+
+  <div class="post">
+  <p>Sometimes you want email-only authentication because it’s simple. Maybe you’re using Firebase and have a set up where you don’t have a proper backend to facilitate creating your own secure tokens via <a href="https://www.firebase.com/docs/web/guide/login/custom.html">Firebase Custom Authentication</a>.</p>
+
+<p>Are you out of luck? Are your hopes and dreams smashed?</p>
+
+<p><strong>NAY!</strong> There’s a hack for that. Just repurpose Firebase’s Email &amp; Password system and you’re good to go. </p>
+
+<h3 id="trickery">Trickery!</h3>
+
+<p>There are 4 parts to this hack:</p>
+
+<ol>
+  <li>For new users, generate a random password and create an account</li>
+  <li>Send an auth token in an email to the user</li>
+  <li>Authenticate a user with email address and auth token</li>
+  <li>Set the expiration of an authenticated user to be ridiculous</li>
+</ol>
+
+<p>Time to get started!</p>
+
+<p>It’s no surprise that Firebase requires a password to go along with an email address…Since I’m not going to care about passwords ever, I’ll generate a random one only for account creation:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// temporary password times!</span>
+<span class="kd">function</span> <span class="nx">generatePass</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">chars</span> <span class="o">=</span> <span class="s2">&quot;0123456789abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">pass</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">32</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">pass</span> <span class="o">+=</span> <span class="nx">chars</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">chars</span><span class="p">.</span><span class="nx">length</span><span class="p">)];</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">pass</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="c1">// `pass` stores &quot;vc3-BNAbYfnA9xkreHQ4f3o94GCCUc5v&quot;;</span>
+<span class="kd">let</span> <span class="nx">pass</span> <span class="o">=</span> <span class="nx">generatePass</span><span class="p">();</span></code></pre></div>
+
+<p>I’ll use this function to grab a random password and use the user’s inputted email address to create a new account in Firebase.</p>
+
+<p><em>Hack req #1: done</em>.</p>
+
+<p>Regardless of if a new user is signing up or an existing user is logging in, an email must be sent that contains an auth token.</p>
+
+<p>Firebase has such a function for email sending—<a href="https://www.firebase.com/docs/web/guide/login/password.html#section-reset-email">Sending a Password Reset Email</a>.</p>
+
+<p>Invoking the <code>resetPassword()</code> function on a Firebase reference will generate a <em>token</em> and send it via <em>email</em>.</p>
+
+<p>Furthermore, Firebase allows a developer to specify what this “Reset your Password” email says (check the Login &amp; Auth tab of your Fireabse), so changing the subject to “Complete your Log In” and appending the auth token to a url that points to your app in the body of the email works rather nicely.</p>
+
+<p>Instead of using the <code>resetPassword()</code> function for its intended purpose, I’ll use it to complete the log in flow and forget about passwords (good riddance). <em>Repurposing</em>!</p>
+
+<p>Now any time a user needs to log in or sign up, I’ll have that user enter their email address and send them an auth token via <code>resetPassword()</code>. All they have to do is click the link in the email, and the landing page the url points to will handle taking the token and resolving the authentication.</p>
+
+<p><em>Hack req #2: done</em>.</p>
+
+<p>Now here is a tricky part. Unless you append the user’s email address to the url as with the token (something that probably shouldn’t be done), the landing page won’t have any knowledge of the email address.</p>
+
+<p>To alleviate this problem, I’ll store the user’s email address in <code>localStorage</code> temporarily when a user enters their email address into a sign-up or login form. When a user clicks on the link in their email and navigates back to my app, I’ll grab the auth token from the url and the email address from <code>localStorage</code>. </p>
+
+<p>Once the user is successfully authenticated, I delete the <code>localStorage</code> item, just because it feels like the right thing to do. Don’t leave that stuff hanging around!</p>
+
+<p><em>Hack req #3: done</em>.</p>
+
+<p>The last part is to make Firebase trust the user’s device for a ridiculously long period of time. Now I don’t mean like years…but a reasonably long amount of time like 2 months. This is handled in the “Login &amp; Auth” section of your Firebase console. The default is 24 hours, but change that to any length of time.</p>
+
+<p>Once a user is successfully authenticated, they’re good to go for the duration that you set.</p>
+
+<p><em>Hack req #4: done</em>.</p>
+
+<p>Whoop! Firebase email-only client-side authentication! </p>
+
+<p>Mission Accomplished.</p>
+
+<h3 id="additions-to-tom-hack-ery">Additions to Tom-hack-ery</h3>
+
+<p>There are a couple of notes and considerations to go along with this approach. </p>
+
+<p><strong>Can’t I use the generated password to log in a new user?</strong></p>
+
+<p>Sure you can! You could even store that password client-side if you wanted to and use it a bunch, but if the user switches devices or if the auth time is up, then a user is going to need to sign in again and you may or may not have that generated password.</p>
+
+<p>Furthermore, it makes sense to me to teach your users how your log in system works. When they sign up, if they are expecting to only have to enter their email address, then that’s what they’re going to expect each time they log in. By making them click a link in their email you’re teaching them the flow of logging into your app; even if they only have to re-log in every 2 months.</p>
+
+<p>If I’ve learned anything from video game design (read: playing a bunch of video games), it’s that you need to teach your players what to expect in unobtrusive ways. Teach your users that when they enter an email address into a form field expecting to log in and be authorized, that they should also be expecting an email to complete that authorization.</p>
+
+<p><strong>But this makes a user automatically un-authenticated after like 2 months?</strong></p>
+
+<p>Yep; regardless of how active the user is on your site too. I designed this hack with that goal in mind because I don’t want to store anything related to authentication client-side if I don’t have to—even storing the email address to finish authenticating a user is borderline bad to me.</p>
+
+<p>By all means, save a user’s email address and password client-side via <code>localStorage</code> and each time you detect that a user isn’t authenticated (or even each time they use your app), use the saved credentials to log them in automatically. Near infinite authenticated sessions! Whoa!</p>
+
+<p>I’m just of the mindset that we shouldn’t be storing anything like that client-side, even if it’s in a “safer” <code>localStorage</code>.</p>
+
+<p><strong>Man, chaining these Firebase functions together gets a litle ‘callback hell-esque’</strong></p>
+
+<p>It sure does…All Firebase built-in functions are async. However, if you wrap each Firebase function in a function that returns a <a href="http://www.html5rocks.com/en/tutorials/es6/promises/">Promise</a> you’ll have better control over their order of execution, especially for creating a new user and sending an email since those should happen sequentially.</p>
+
+<p>Creating a user with something like:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// create a user</span>
+<span class="kd">function</span> <span class="nx">createUser</span><span class="p">(</span><span class="nx">email</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="kd">let</span> <span class="nx">pass</span> <span class="o">=</span> <span class="nx">generatePass</span><span class="p">();</span>
+
+    <span class="nx">user</span><span class="p">.</span><span class="nx">email</span> <span class="o">=</span> <span class="nx">email</span><span class="p">;</span>
+    <span class="nx">user</span><span class="p">.</span><span class="nx">password</span> <span class="o">=</span> <span class="nx">pass</span><span class="p">;</span>
+
+    <span class="nx">FirebaseRef</span><span class="p">.</span><span class="nx">createUser</span><span class="p">(</span><span class="nx">user</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">payload</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">resolve</span><span class="p">(</span><span class="nx">payload</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">})</span>
+<span class="p">}</span></code></pre></div>
+
+<p>And sending an email with:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// send auth token</span>
+<span class="kd">function</span> <span class="nx">sendEmail</span><span class="p">(</span><span class="nx">email</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="nx">user</span><span class="p">.</span><span class="nx">email</span> <span class="o">=</span> <span class="nx">email</span><span class="p">;</span>
+    
+    <span class="nx">FirebaseRef</span><span class="p">.</span><span class="nx">resetPassword</span><span class="p">(</span><span class="nx">user</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">resolve</span><span class="p">(</span><span class="s2">&quot;Email sent successfully&quot;</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">})</span>
+<span class="p">}</span></code></pre></div>
+
+<p>You only want to send a <code>resetPassword()</code> email on log in or <strong>IFF</strong> a new user account has been successfully created. If there is an error during user account creation, bail out! and don’t send the email:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// now use these promises</span>
+<span class="nx">createUser</span><span class="p">(</span><span class="nx">email</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">payload</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+  <span class="c1">// user created! send email</span>
+  <span class="k">return</span> <span class="nx">sendEmail</span><span class="p">(</span><span class="nx">email</span><span class="p">);</span>
+
+<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+  <span class="c1">// &quot;Email sent successfully&quot;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+
+<span class="p">}).</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Terrible things happened!&quot;</span><span class="p">);</span>
+
+<span class="p">})</span></code></pre></div>
+
+<p>If something happens during account creation, the email won’t be sent and execution will instead move to the <code>catch()</code> handler.</p>
+
+<p>Much more manageable. Yeah Promies!</p>
+
+<h3 id="whew">Whew!</h3>
+
+<p>That’s it! There’s my hack to give client-side email-only authentication using Firebase.</p>
+
+<p>The goal of which is to:</p>
+
+<ul>
+  <li>prevent users from having to remember <strong>yet another password</strong></li>
+  <li>keep users distinct while maintaining an “acceptable” level of security</li>
+  <li>provide a solution to email-only authentication without a proper back-end</li>
+</ul>
+
+<p>Although, if you have access to any sort of server and you want email-only authentication, then you should really be using <a href="https://www.firebase.com/docs/web/guide/login/custom.html">custom authentication</a> and use the built-in authentication the way it was intended to be used.</p>
+
+<p>The end. Hopefully this was insightful.</p>
+
+<p>Thanks for reading!</p>
+
+  </div>
+
+
+
+</div>
+
+        <footer>
+
+  <div class="me">
+    <div class="highlight-img">
+      <div class="me-img">
+        <img src="/assets/me-img.png"/>
+        <img class="easter-egg" src="/assets/nu-side.png"/>
+      </div>
+    </div>
+    <div>
+      <div class="me-description">
+        <p>Heyo! I'm Alex.</p>
+        <p>I try to write about neat things&mdash;mainly programming stuff and thoughts on games I'm playing right now</p>
+        <p>I code with the mantra "Make anything cool today?"</p>
+        <a href="https://github.com/theoperatore"><img src="/assets/GitHub-Mark.svg"/></a>
+        <a href="https://twitter.com/theoperatore"><img src="/assets/twitter.svg"/></a>
+        <a href="mailto:theoperatore@gmail.com"><img src="/assets/envelope.svg"/></a>
+
+      </div>
+    </div>
+  </div> 
+
+
+  &copy;2015 -- Made using <a target="_blank" href='http://jekyllrb.com/'>Jekyll</a> hosted on <a target='_blank' href='http://pages.github.com/'>GitHub</a>
+</footer>
+      </div>
+
+
+      <script type="text/javascript">
+
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+
+          document.getElementById('nav').classList.toggle('show');
+
+        }, false);
+
+      </script>   
+    </body>
+</html>

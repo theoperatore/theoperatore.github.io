@@ -1,6 +1,6 @@
 name: Alex.Petersen
 markdown: kramdown
-hightlighter: pygments
+highlighter: pygments
 
 kramdown:
   input: GFM
