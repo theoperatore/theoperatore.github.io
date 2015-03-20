@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Email-only Auth with Firebase?!
-comments: false
+comments: true
 ---
 
 Sometimes you want email-only authentication because it's simple. Maybe you're using Firebase and have a set up where you don't have a proper backend to facilitate creating your own secure tokens via [Firebase Custom Authentication](https://www.firebase.com/docs/web/guide/login/custom.html).
